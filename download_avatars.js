@@ -1,17 +1,23 @@
 var request = require('request');
+var secrets = require('./secrets');
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
+  var options = {
+    url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
+    headers: {
+      'User-Agent': 'saradoubleu',
+      'Authorization': 'request'
+  }
+  };
+
+  request(options, function(err, res, body) {
+    cb(err, body);
+  });
 }
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", result);
 });
-
-
-/*
-In the next step you will implement the function to use the request library to programmatically fetch the list of contributors via HTTPS for the given repo.
-
-*/
